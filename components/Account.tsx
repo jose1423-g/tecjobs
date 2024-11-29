@@ -3,8 +3,10 @@ import { supabase } from "@/utils/supabase";
 import { StyleSheet, View, Alert } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { Session } from "@supabase/supabase-js";
+import { useRouter } from "expo-router";
 
 export default function Account({ session }: { session: Session }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [website, setWebsite] = useState("");
@@ -77,6 +79,15 @@ export default function Account({ session }: { session: Session }) {
     }
   }
 
+  const handleSingOut = async () => {
+    try {
+      await supabase.auth.signOut()
+      router.navigate('/login');
+    } catch (error) {
+      // console.error('Error al cerrar sesión:', error);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
@@ -108,7 +119,7 @@ export default function Account({ session }: { session: Session }) {
       </View>
 
       <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
+        <Button title="Sign Out" onPress={handleSingOut} />
       </View>
     </View>
   );
@@ -118,7 +129,8 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     padding: 12,
-  },
+    backgroundColor: '#4682b4'
+  },  
   verticallySpaced: {
     paddingTop: 4,
     paddingBottom: 4,

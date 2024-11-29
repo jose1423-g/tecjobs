@@ -1,7 +1,21 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, View, AppState } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  View,
+  AppState,
+  TextInput,
+  Text,
+} from "react-native";
 import { supabase } from "@/utils/supabase";
-import { Button, Input } from "@rneui/themed";
+import { useRouter } from "expo-router";
+import Button from "@/components/Button";
+import LinkButton from "@/components/LinkButton";
+
+
+type Props = {
+  theme?: "register";
+};
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -15,7 +29,8 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
-export default function Auth() {
+export default function Auth({ theme }: Props) {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,7 +42,11 @@ export default function Auth() {
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
+    if (error) {
+      Alert.alert(error.message);
+    } else {
+      router.replace("/(tabs)");      
+    }
     setLoading(false);
   }
 
@@ -47,41 +66,86 @@ export default function Auth() {
     setLoading(false);
   }
 
+  if (theme === "register") {
+
+    return (
+      <View style={styles.container}>
+        <View style={[styles.verticallySpaced, styles.mb20]}>
+          <Text style={styles.mb20}>Email</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            placeholder="Correo electronico"
+            autoCapitalize={"none"}
+          />
+        </View>
+        <View style={[styles.verticallySpaced, styles.mb20]}>
+          <Text style={styles.mb20}>Contraseña</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            secureTextEntry={true}
+            placeholder="Contraseña"
+            autoCapitalize={"none"}
+          />
+        </View>
+        <View style={[styles.verticallySpaced, styles.mt20]}>
+          <Button
+            disabled={loading}
+            label="Registrarse"
+            onPress={signUpWithEmail}
+          />
+          <LinkButton
+            width="auto"
+            href="/login"
+            label="¿Ya tienes una cuenta?"
+          />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input
-          label="Email"
-          leftIcon={{ type: "font-awesome", name: "envelope" }}
+      <View style={[styles.verticallySpaced, styles.mb20]}>
+        <Text style={styles.mb20}>Email</Text>
+        <TextInput
+          // label="Email"
+          // leftIcon={{ type: "font-awesome", name: "envelope" }}
+          style={styles.input}
           onChangeText={(text) => setEmail(text)}
           value={email}
-          placeholder="email@address.com"
+          placeholder="Correo electronico"
           autoCapitalize={"none"}
         />
       </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Password"
-          leftIcon={{ type: "font-awesome", name: "lock" }}
+      <View style={[styles.verticallySpaced, styles.mb20]}>
+        <Text style={styles.mb20}>Contraseña</Text>
+        <TextInput
+          // label="Password"
+          // leftIcon={{ type: "font-awesome", name: "lock" }}
+          style={styles.input}
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry={true}
-          placeholder="Password"
+          placeholder="Contraseña"
           autoCapitalize={"none"}
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Button
-          title="Sign in"
+          // title="Sign in"
           disabled={loading}
-          onPress={() => signInWithEmail()}
+          label="Login"
+          onPress={signInWithEmail}
         />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Button
-          title="Sign up"
-          disabled={loading}
-          onPress={() => signUpWithEmail()}
+        <LinkButton
+          // title="Sign in"
+          width="auto"
+          href="/register"
+          label="Crear una cuenta"
         />
       </View>
     </View>
@@ -90,8 +154,11 @@ export default function Auth() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    paddingHorizontal: 25,
+    borderTopEndRadius: 25,
+    paddingVertical: 25,
+    borderTopStartRadius: 25,
+    backgroundColor: "#f5f5f5",
   },
   verticallySpaced: {
     paddingTop: 4,
@@ -100,5 +167,17 @@ const styles = StyleSheet.create({
   },
   mt20: {
     marginTop: 20,
+  },
+  mb20: {
+    marginBottom: 20,
+  },
+  input: {
+    width: "100%",
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingLeft: 10,
+    height: 40,
+    backgroundColor: "#ffffff",
+    borderColor: "#faf0e6",
   },
 });

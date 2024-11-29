@@ -1,7 +1,10 @@
-import React from "react";
+import { View, Text } from "react-native";
 
-export const index = () => {
-  return <div>index</div>;
-};
+export default function Home() {
 
-export default index;
+  return (
+    <View>
+      <Text>HOLIS ESTE ES EL HOME</Text>
+    </View>
+  );
+}

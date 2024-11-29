@@ -4,15 +4,17 @@ import { StyleSheet, View, Pressable, Text } from "react-native";
 type Props = {
     label: string;
     onPress?: () => void;
+    disabled: boolean;
 };
 
-export default function Button({label, onPress}: Props) {
+export default function Button({label, disabled, onPress}: Props) {
 
     return (        
         <View>
             <Pressable 
                 style={styles.buttonLogin}
                 onPress={onPress}
+                disabled={disabled}
             >
                 <Text style={styles.text}>{ label }</Text>
             </Pressable>

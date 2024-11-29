@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase";
-import { StyleSheet, View, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Alert,
+  TextInput,
+  Text,
+  SafeAreaView,
+} from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { Session } from "@supabase/supabase-js";
 import { useRouter } from "expo-router";
@@ -81,36 +88,39 @@ export default function Account({ session }: { session: Session }) {
 
   const handleSingOut = async () => {
     try {
-      await supabase.auth.signOut()
-      router.navigate('/login');
-    } catch (error) {
-      // console.error('Error al cerrar sesión:', error);
-    }
-  }
+      await supabase.auth.signOut();
+      router.navigate("/login");
+    } catch (error) {}
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
+    <SafeAreaView style={styles.container}>
+      <View style={[styles.verticallySpaced, styles.mb20]}>
+        <Text style={styles.mb20}>Email</Text>
+        <TextInput style={styles.input} value={session?.user?.email} editable={false} />
       </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Username"
+      <View style={[styles.verticallySpaced, styles.mb20]}>
+        <Text style={styles.mb20}>Username</Text>
+        <TextInput
+          // label="Username"
+          style={styles.input}
           value={username || ""}
           onChangeText={(text) => setUsername(text)}
         />
       </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Website"
+      <View style={[styles.verticallySpaced, styles.mb20]}>
+        <Text style={styles.mb20}>Website</Text>
+        <TextInput
+          // label="Website"
+          style={styles.input}
           value={website || ""}
           onChangeText={(text) => setWebsite(text)}
         />
       </View>
 
-      <View style={[styles.verticallySpaced, styles.mt20]}>
+      <View style={[styles.verticallySpaced, styles.mt20, styles.mb20]}>
         <Button
-          title={loading ? "Loading ..." : "Update"}
+          title={loading ? "Loading ..." : "Guardar"}
           onPress={() =>
             updateProfile({ username, website, avatar_url: avatarUrl })
           }
@@ -119,18 +129,20 @@ export default function Account({ session }: { session: Session }) {
       </View>
 
       <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={handleSingOut} />
+        <Button title="Cerrar sessión"  onPress={handleSingOut} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
-    backgroundColor: '#4682b4'
-  },  
+    paddingHorizontal: 25,
+    borderTopEndRadius: 25,
+    paddingVertical: 25,
+    borderTopStartRadius: 25,
+    backgroundColor: "#f5f5f5",
+  },
   verticallySpaced: {
     paddingTop: 4,
     paddingBottom: 4,
@@ -139,4 +151,19 @@ const styles = StyleSheet.create({
   mt20: {
     marginTop: 20,
   },
+  mb20: {
+    marginBottom: 20,
+  },
+  input: {
+    width: "100%",
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingLeft: 10,
+    height: 40,
+    backgroundColor: "#ffffff",
+    borderColor: "#faf0e6",
+  },
+  btn: {
+    backgroundColor: '#8b0000'
+  }
 });

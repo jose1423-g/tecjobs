@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, SafeAreaView } from "react-native";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 import Account from "@/components/Account";
 import { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase";
@@ -46,7 +46,6 @@ export default function Perfil() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
   },
 });

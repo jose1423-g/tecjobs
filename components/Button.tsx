@@ -5,9 +5,24 @@ type Props = {
     label: string;
     onPress?: () => void;
     disabled: boolean;
+    theme? : 'primary', 
 };
 
-export default function Button({label, disabled, onPress}: Props) {
+export default function Button({label, disabled, onPress, theme}: Props) {
+
+    if (theme === 'primary') {
+        return (        
+            <View>
+                <Pressable 
+                    style={styles.buttonRegister}
+                    onPress={onPress}
+                    disabled={disabled}
+                >
+                    <Text style={styles.text}>{ label }</Text>
+                </Pressable>
+            </View>
+        );
+    }
 
     return (        
         <View>

@@ -97,7 +97,11 @@ export default function Account({ session }: { session: Session }) {
     <SafeAreaView style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mb20]}>
         <Text style={styles.mb20}>Email</Text>
-        <TextInput style={styles.input} value={session?.user?.email} editable={false} />
+        <TextInput
+          style={styles.input}
+          value={session?.user?.email}
+          editable={false}
+        />
       </View>
       <View style={[styles.verticallySpaced, styles.mb20]}>
         <Text style={styles.mb20}>Username</Text>
@@ -120,7 +124,7 @@ export default function Account({ session }: { session: Session }) {
 
       <View style={[styles.verticallySpaced, styles.mt20, styles.mb20]}>
         <Button
-          title={loading ? "Loading ..." : "Guardar"}
+          title={loading ? "Cargando ..." : "Guardar"}
           onPress={() =>
             updateProfile({ username, website, avatar_url: avatarUrl })
           }
@@ -129,7 +133,7 @@ export default function Account({ session }: { session: Session }) {
       </View>
 
       <View style={styles.verticallySpaced}>
-        <Button title="Cerrar sessión"  onPress={handleSingOut} />
+        <Button title="Cerrar sesión" onPress={handleSingOut} />
       </View>
     </SafeAreaView>
   );
@@ -137,22 +141,23 @@ export default function Account({ session }: { session: Session }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 25,
-    borderTopEndRadius: 25,
-    paddingVertical: 25,
-    borderTopStartRadius: 25,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+
     backgroundColor: "#f5f5f5",
   },
   verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
+    padding: 20,
     alignSelf: "stretch",
   },
   mt20: {
-    marginTop: 20,
+    marginTop: 10,
   },
   mb20: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
   input: {
     width: "100%",
@@ -164,6 +169,6 @@ const styles = StyleSheet.create({
     borderColor: "#faf0e6",
   },
   btn: {
-    backgroundColor: '#8b0000'
-  }
+    backgroundColor: "#8b0000",
+  },
 });

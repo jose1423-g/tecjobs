@@ -29,7 +29,7 @@ export default function Perfil() {
       <View style={styles.container}>
         {session && session.user ? (
           <Account key={session.user.id} session={session} />
-        ) : (          
+        ) : (
           <LinkButton
             href="/login"
             label="Iniciar session o registrarse"

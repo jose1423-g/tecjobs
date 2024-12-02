@@ -117,54 +117,49 @@ export default function Jobs() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <View>
-          {jobs}
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          style={{ backgroundColor: "#7cfc00" }}
+        >
+          <ScrollView>
+            <View>
+              <View style={styles.borderPadding}>
+                <Text style={styles.titleModal}>{selectjob?.title}</Text>
+              </View>
 
-          <Modal
-            animationType="slide"
-            transparent={false}
-            visible={modalVisible}
-            style={{ backgroundColor: "#7cfc00" }}
-          >
-            <ScrollView>
-              <View>
-                <View style={styles.borderPadding}>
-                  <Text style={styles.titleModal}>{selectjob?.title}</Text>
-                </View>
+              <View style={styles.borderPadding}>
+                <Text style={[styles.fontsize20, styles.mb20]}>
+                  Descripcíon
+                </Text>
+                <Text style={[styles.fontsize16, styles.mb20]}>
+                  {selectjob?.description}
+                </Text>
+              </View>
 
-                <View style={styles.borderPadding}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>
-                    Descripcíon
-                  </Text>
-                  <Text style={[styles.fontsize16, styles.mb20]}>
-                    {selectjob?.description}
-                  </Text>
-                </View>
+              <View style={styles.borderPadding}>
+                <Text style={[styles.fontsize20, styles.mb20]}>Requisitos</Text>
+                <Text style={[styles.fontsize16, styles.mb20]}>
+                  {selectjob?.languages}
+                </Text>
+              </View>
 
-                <View style={styles.borderPadding}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>
-                    Requisitos
-                  </Text>
-                  <Text style={[styles.fontsize16, styles.mb20]}>
-                    {selectjob?.languages}
-                  </Text>
-                </View>
+              <View style={styles.borderPadding}>
+                <Text style={[styles.fontsize20, styles.mb20]}>Sueldo</Text>
+                <Text style={[styles.fontsize16, styles.mb20]}>
+                  {selectjob?.salary}
+                </Text>
+              </View>
 
-                <View style={styles.borderPadding}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>Sueldo</Text>
-                  <Text style={[styles.fontsize16, styles.mb20]}>
-                    {selectjob?.salary}
-                  </Text>
-                </View>
-
-                <View style={styles.borderPadding}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>
-                    Lugar de trabajo
-                  </Text>
-                  <Text style={[styles.fontsize16, styles.mb20]}>
-                    {selectjob?.job_type}
-                  </Text>
-                </View>
+              <View style={styles.borderPadding}>
+                <Text style={[styles.fontsize20, styles.mb20]}>
+                  Lugar de trabajo
+                </Text>
+                <Text style={[styles.fontsize16, styles.mb20]}>
+                  {selectjob?.job_type}
+                </Text>
+              </View>
 
                 <View style={{ padding: 20 }}>
                   <Button
@@ -189,7 +184,6 @@ export default function Jobs() {
               </View>
             </ScrollView>
           </Modal>
-        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -199,10 +193,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-  },
-  safeAreaModal: {
-    flex: 1,
-    backgroundColor: "#fff",
   },
   card: {
     backgroundColor: "#ffffff",

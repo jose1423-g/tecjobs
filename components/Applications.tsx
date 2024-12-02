@@ -7,7 +7,7 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Button from "@/components/Button"; // Cambia la ruta si el botón está en otra carpeta
 import { supabase } from "@/utils/supabase";
 
@@ -90,102 +90,110 @@ export default function Applications() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        {/* <Text style={styles.header}>Postulaciones</Text> */}
-        {appliedJobs.length > 0 &&
-          appliedJobs.map((job, key) => (
-            <View key={key} style={styles.card}>
-              <Text style={styles.title}>{job.title}</Text>
-              <Text style={styles.salary}>{job.salary}</Text>
-              <Text style={styles.type}>{job.job_type}</Text>
-              <Text style={styles.appliedDate}>
-                Fecha de postulación: {job.appliedDate}
-              </Text>
-              <Button
-                theme="primary"
-                label="Ver Detalles"
-                onPress={() => openModal(job)}
-                disabled={false}
-              />
-            </View>
-          ))}
-
-        {selectedJob && (
-          <Modal
-            animationType="slide"
-            transparent={false}
-            visible={modalVisible}
-            style={{ backgroundColor: "#7cfc00" }}
-          >
-            <ScrollView>
-              <View>
-                <View style={styles.borderPaddin}>
-                  <Text style={styles.titleModal}>{selectedJob.title}</Text>
-                </View>
-
-                <View style={styles.borderPaddin}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>
-                    Descripcíon
-                  </Text>
-                  <Text style={styles.fontsize16}>
-                    {selectedJob.description}
-                  </Text>
-                </View>
-
-                <View style={styles.borderPaddin}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>Tipo</Text>
-                  <Text style={styles.fontsize16}>{selectedJob.job_type}</Text>
-                </View>
-
-                <View style={styles.borderPaddin}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>Salario</Text>
-                  <Text style={styles.fontsize16}>{selectedJob.salary}</Text>
-                </View>
-
-                <View style={styles.borderPaddin}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>
-                    Lenguajes
-                  </Text>
-                  <Text style={styles.fontsize16}>
-                    {selectedJob.languages.join(", ")}
-                  </Text>
-                </View>
-
-                <View style={styles.borderPaddin}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>
-                    Fecha de postulación
-                  </Text>
-                  <Text style={styles.fontsize16}>
-                    {selectedJob.appliedDate}
-                  </Text>
-                </View>
-
-                <View style={styles.borderPaddin}>
-                  <Text style={[styles.fontsize20, styles.mb20]}>Estado</Text>
-                  <Text style={styles.fontsize16}>{selectedJob.status}</Text>
-                </View>
-
-                <View style={{ padding: 20 }}>
-                  <Pressable
-                    style={{
-                      backgroundColor: "#ff0000",
-                      padding: 10,
-                      borderRadius: 3,
-                    }}
-                    onPress={closeModal}
-                  >
-                    <Text style={{ textAlign: "center", color: "#ffffff" }}>
-                      Cerrar
-                    </Text>
-                  </Pressable>
-                </View>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
+          {/* <Text style={styles.header}>Postulaciones</Text> */}
+          {appliedJobs.length > 0 &&
+            appliedJobs.map((job, key) => (
+              <View key={key} style={styles.card}>
+                <Text style={styles.title}>{job.title}</Text>
+                <Text style={styles.salary}>{job.salary}</Text>
+                <Text style={styles.type}>{job.job_type}</Text>
+                <Text style={styles.appliedDate}>
+                  Fecha de postulación: {job.appliedDate}
+                </Text>
+                <Button
+                  theme="primary"
+                  label="Ver Detalles"
+                  onPress={() => openModal(job)}
+                  disabled={false}
+                />
               </View>
-            </ScrollView>
-          </Modal>
-        )}
-      </ScrollView>
-    </SafeAreaView>
+            ))}
+
+          {selectedJob && (
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={modalVisible}
+              style={{
+                backgroundColor: "#7cfc00",
+              }}
+            >
+              <ScrollView>
+                <View style={styles.modalContainer}>
+                  <View style={styles.borderPaddin}>
+                    <Text style={styles.titleModal}>{selectedJob.title}</Text>
+                  </View>
+
+                  <View style={styles.borderPaddin}>
+                    <Text style={[styles.fontsize20, styles.mb20]}>
+                      Descripcíon
+                    </Text>
+                    <Text style={styles.fontsize16}>
+                      {selectedJob.description}
+                    </Text>
+                  </View>
+
+                  <View style={styles.borderPaddin}>
+                    <Text style={[styles.fontsize20, styles.mb20]}>Tipo</Text>
+                    <Text style={styles.fontsize16}>
+                      {selectedJob.job_type}
+                    </Text>
+                  </View>
+
+                  <View style={styles.borderPaddin}>
+                    <Text style={[styles.fontsize20, styles.mb20]}>
+                      Salario
+                    </Text>
+                    <Text style={styles.fontsize16}>{selectedJob.salary}</Text>
+                  </View>
+
+                  <View style={styles.borderPaddin}>
+                    <Text style={[styles.fontsize20, styles.mb20]}>
+                      Lenguajes
+                    </Text>
+                    <Text style={styles.fontsize16}>
+                      {selectedJob.languages.join(", ")}
+                    </Text>
+                  </View>
+
+                  <View style={styles.borderPaddin}>
+                    <Text style={[styles.fontsize20, styles.mb20]}>
+                      Fecha de postulación
+                    </Text>
+                    <Text style={styles.fontsize16}>
+                      {selectedJob.appliedDate}
+                    </Text>
+                  </View>
+
+                  <View style={styles.borderPaddin}>
+                    <Text style={[styles.fontsize20, styles.mb20]}>Estado</Text>
+                    <Text style={styles.fontsize16}>{selectedJob.status}</Text>
+                  </View>
+
+                  <View style={{ padding: 20 }}>
+                    <Pressable
+                      style={{
+                        backgroundColor: "#ff0000",
+                        padding: 10,
+                        borderRadius: 3,
+                      }}
+                      onPress={closeModal}
+                    >
+                      <Text style={{ textAlign: "center", color: "#ffffff" }}>
+                        Cerrar
+                      </Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </ScrollView>
+            </Modal>
+          )}
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -194,6 +202,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#f5f5f5",
+  },
+  modalContainer: {
+    paddingTop: 50,
   },
   header: {
     fontSize: 24,

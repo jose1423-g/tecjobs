@@ -29,7 +29,7 @@ export default function Perfil() {
       <View style={styles.container}>
         {session && session.user ? (
           <Account key={session.user.id} session={session} />
-        ) : (          
+        ) : (
           <LinkButton
             href="/login"
             label="Iniciar session o registrarse"
@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: 'center',
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
   },
 });

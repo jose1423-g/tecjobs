@@ -117,10 +117,12 @@ export default function Applications() {
               animationType="slide"
               transparent={false}
               visible={modalVisible}
-              style={{ backgroundColor: "#7cfc00" }}
+              style={{
+                backgroundColor: "#7cfc00",
+              }}
             >
               <ScrollView>
-                <View>
+                <View style={styles.modalContainer}>
                   <View style={styles.borderPaddin}>
                     <Text style={styles.titleModal}>{selectedJob.title}</Text>
                   </View>
@@ -200,6 +202,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#f5f5f5",
+  },
+  modalContainer: {
+    paddingTop: 50,
   },
   header: {
     fontSize: 24,

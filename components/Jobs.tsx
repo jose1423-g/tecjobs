@@ -91,7 +91,7 @@ export default function Jobs() {
             style={{ backgroundColor: "#7cfc00" }}
           >
             <ScrollView>
-              <View>
+              <View style={styles.modalContainer}>
                 <View style={styles.borderPaddin}>
                   <Text style={styles.titleModal}>{selectjob?.title}</Text>
                 </View>
@@ -163,6 +163,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+  },
+  modalContainer: {
+    paddingTop: 50,
   },
   card: {
     backgroundColor: "#ffffff",

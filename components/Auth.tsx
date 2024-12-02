@@ -138,7 +138,7 @@ export default function Auth({ theme }: Props) {
         <Button
           // title="Sign in"
           disabled={loading}
-          label="Login"
+          label="Iniciar sesíon"
           onPress={signInWithEmail}
         />
         <LinkButton

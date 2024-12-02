@@ -92,10 +92,10 @@ export default function Applications() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Text style={styles.header}>Postulaciones</Text>
+        {/* <Text style={styles.header}>Postulaciones</Text> */}
         {appliedJobs.length > 0 &&
-          appliedJobs.map((job) => (
-            <View key={job.id} style={styles.card}>
+          appliedJobs.map((job, key) => (
+            <View key={key} style={styles.card}>
               <Text style={styles.title}>{job.title}</Text>
               <Text style={styles.salary}>{job.salary}</Text>
               <Text style={styles.type}>{job.job_type}</Text>
@@ -114,35 +114,74 @@ export default function Applications() {
         {selectedJob && (
           <Modal
             animationType="slide"
-            transparent={true}
+            transparent={false}
             visible={modalVisible}
+            style={{ backgroundColor: "#7cfc00" }}
           >
-            <View style={styles.modalContainer}>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>{selectedJob.title}</Text>
-                <Text style={styles.modalDescription}>
-                  {selectedJob.description}
-                </Text>
-                <Text style={styles.modalLabel}>
-                  Tipo: {selectedJob.job_type}
-                </Text>
-                <Text style={styles.modalLabel}>
-                  Salario: {selectedJob.salary}
-                </Text>
-                <Text style={styles.modalLabel}>
-                  Lenguajes: {selectedJob.languages.join(", ")}
-                </Text>
-                <Text style={styles.modalLabel}>
-                  Fecha de postulación: {selectedJob.appliedDate}
-                </Text>
-                <Text style={styles.modalLabel}>
-                  Estado: {selectedJob.status}
-                </Text>
-                <Pressable style={styles.closeButton} onPress={closeModal}>
-                  <Text style={styles.closeButtonText}>Cerrar</Text>
-                </Pressable>
+            <ScrollView>
+              <View>
+                <View style={styles.borderPaddin}>
+                  <Text style={styles.titleModal}>{selectedJob.title}</Text>
+                </View>
+
+                <View style={styles.borderPaddin}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>
+                    Descripcíon
+                  </Text>
+                  <Text style={styles.fontsize16}>
+                    {selectedJob.description}
+                  </Text>
+                </View>
+
+                <View style={styles.borderPaddin}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>Tipo</Text>
+                  <Text style={styles.fontsize16}>{selectedJob.job_type}</Text>
+                </View>
+
+                <View style={styles.borderPaddin}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>Salario</Text>
+                  <Text style={styles.fontsize16}>{selectedJob.salary}</Text>
+                </View>
+
+                <View style={styles.borderPaddin}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>
+                    Lenguajes
+                  </Text>
+                  <Text style={styles.fontsize16}>
+                    {selectedJob.languages.join(", ")}
+                  </Text>
+                </View>
+
+                <View style={styles.borderPaddin}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>
+                    Fecha de postulación
+                  </Text>
+                  <Text style={styles.fontsize16}>
+                    {selectedJob.appliedDate}
+                  </Text>
+                </View>
+
+                <View style={styles.borderPaddin}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>Estado</Text>
+                  <Text style={styles.fontsize16}>{selectedJob.status}</Text>
+                </View>
+
+                <View style={{ padding: 20 }}>
+                  <Pressable
+                    style={{
+                      backgroundColor: "#ff0000",
+                      padding: 10,
+                      borderRadius: 3,
+                    }}
+                    onPress={closeModal}
+                  >
+                    <Text style={{ textAlign: "center", color: "#ffffff" }}>
+                      Cerrar
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
-            </View>
+            </ScrollView>
           </Modal>
         )}
       </ScrollView>
@@ -191,39 +230,31 @@ const styles = StyleSheet.create({
     color: "#757575",
     marginBottom: 10,
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
-  },
   modalContent: {
     width: "90%",
     backgroundColor: "#ffffff",
     padding: 20,
     borderRadius: 8,
   },
-  modalTitle: {
+  titleModal: {
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  borderPaddin: {
+    paddingHorizontal: 20,
+    paddingVertical: 17,
+    borderBottomColor: "#d3d3d3",
+    borderBottomWidth: 1,
+  },
+  fontsize16: {
+    fontSize: 16,
+  },
+  fontsize20: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
   },
-  modalDescription: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  modalLabel: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  closeButton: {
-    marginTop: 20,
-    backgroundColor: "#ff5c5c",
-    padding: 10,
-    borderRadius: 5,
-  },
-  closeButtonText: {
-    color: "#ffffff",
-    textAlign: "center",
+  mb20: {
+    marginBottom: 15,
   },
 });

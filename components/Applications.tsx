@@ -19,6 +19,7 @@ interface Job {
   salary: string;
   languages: string[];
   appliedDate: string;
+  status: string;
 }
 
 type Applied = {
@@ -26,6 +27,7 @@ type Applied = {
   job_id: number;
   user_id: number;
   created_at: string;
+  status: string;
 };
 
 export default function Applications() {
@@ -68,6 +70,7 @@ export default function Applications() {
 
         jobs.push({
           ...data[0],
+          status: apply.status,
           appliedDate: appliedDateFormatted,
         });
       }
@@ -131,6 +134,9 @@ export default function Applications() {
                 </Text>
                 <Text style={styles.modalLabel}>
                   Fecha de postulación: {selectedJob.appliedDate}
+                </Text>
+                <Text style={styles.modalLabel}>
+                  Estado: {selectedJob.status}
                 </Text>
                 <Pressable style={styles.closeButton} onPress={closeModal}>
                   <Text style={styles.closeButtonText}>Cerrar</Text>

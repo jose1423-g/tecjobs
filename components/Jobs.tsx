@@ -123,64 +123,66 @@ export default function Jobs() {
           transparent={false}
           visible={modalVisible}
         >
-          <ScrollView>
-            <View>
-              <View style={styles.borderPaddin}>
-                <Text style={styles.titleModal}>{selectjob?.title}</Text>
-              </View>
+          <SafeAreaView style={styles.safeAreaModal}>
+            <ScrollView>
+              <View>
+                <View style={styles.borderPadding}>
+                  <Text style={styles.titleModal}>{selectjob?.title}</Text>
+                </View>
 
-              <View style={styles.borderPaddin}>
-                <Text style={[styles.fontsize20, styles.mb20]}>Descripción</Text>
-                <Text style={[styles.fontsize16, styles.mb20]}>
-                  {selectjob?.description}
-                </Text>
-              </View>
-
-              <View style={styles.borderPaddin}>
-                <Text style={[styles.fontsize20, styles.mb20]}>Requisitos</Text>
-                <Text style={[styles.fontsize16, styles.mb20]}>
-                  {selectjob?.languages.join(", ")}
-                </Text>
-              </View>
-
-              <View style={styles.borderPaddin}>
-                <Text style={[styles.fontsize20, styles.mb20]}>Sueldo</Text>
-                <Text style={[styles.fontsize16, styles.mb20]}>
-                  {selectjob?.salary}
-                </Text>
-              </View>
-
-              <View style={styles.borderPaddin}>
-                <Text style={[styles.fontsize20, styles.mb20]}>
-                  Lugar de trabajo
-                </Text>
-                <Text style={[styles.fontsize16, styles.mb20]}>
-                  {selectjob?.job_type}
-                </Text>
-              </View>
-
-              <View style={{ padding: 20 }}>
-                <Button
-                  theme="primary"
-                  label="Postularse"
-                  disabled={appliedJobs.includes(selectjob?.id || 0)}
-                  onPress={() => applyToJob(selectjob?.id as number)}
-                />
-                <Pressable
-                  style={{
-                    backgroundColor: "#ff0000",
-                    padding: 10,
-                    borderRadius: 3,
-                  }}
-                  onPress={closeModal}
-                >
-                  <Text style={{ textAlign: "center", color: "#ffffff" }}>
-                    Cerrar
+                <View style={styles.borderPadding}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>Descripción</Text>
+                  <Text style={[styles.fontsize16, styles.mb20]}>
+                    {selectjob?.description}
                   </Text>
-                </Pressable>
+                </View>
+
+                <View style={styles.borderPadding}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>Requisitos</Text>
+                  <Text style={[styles.fontsize16, styles.mb20]}>
+                    {selectjob?.languages.join(", ")}
+                  </Text>
+                </View>
+
+                <View style={styles.borderPadding}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>Sueldo</Text>
+                  <Text style={[styles.fontsize16, styles.mb20]}>
+                    {selectjob?.salary}
+                  </Text>
+                </View>
+
+                <View style={styles.borderPadding}>
+                  <Text style={[styles.fontsize20, styles.mb20]}>
+                    Lugar de trabajo
+                  </Text>
+                  <Text style={[styles.fontsize16, styles.mb20]}>
+                    {selectjob?.job_type}
+                  </Text>
+                </View>
+
+                <View style={{ padding: 20 }}>
+                  <Button
+                    theme="primary"
+                    label="Postularse"
+                    disabled={appliedJobs.includes(selectjob?.id || 0)}
+                    onPress={() => applyToJob(selectjob?.id as number)}
+                  />
+                  <Pressable
+                    style={{
+                      backgroundColor: "#ff0000",
+                      padding: 10,
+                      borderRadius: 3,
+                    }}
+                    onPress={closeModal}
+                  >
+                    <Text style={{ textAlign: "center", color: "#ffffff" }}>
+                      Cerrar
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </SafeAreaView>
         </Modal>
       </SafeAreaView>
     </View>
@@ -191,6 +193,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+  },
+  safeAreaModal: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
   card: {
     backgroundColor: "#ffffff",
@@ -219,7 +225,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  borderPaddin: {
+  borderPadding: {
     padding: 20,
     borderBottomColor: "#d3d3d3",
     borderBottomWidth: 1,

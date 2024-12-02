@@ -103,7 +103,9 @@ export default function Jobs() {
     <View style={[styles.card, styles.mb20]} key={item.id}>
       <Text style={[styles.title, styles.mb20]}>{item.title}</Text>
       <Text style={[styles.fontsize16, styles.mb20]}>$ {item.salary}</Text>
-      <Text style={[styles.fontsize16, styles.mb20]}>{item.languages.join(", ")}</Text>
+      <Text style={[styles.fontsize16, styles.mb20]}>
+        {item.languages.join(", ")}
+      </Text>
       <Text style={[styles.fontsize16, styles.mb20]}>{item.job_type}</Text>
       <Button
         theme="primary"
@@ -116,6 +118,7 @@ export default function Jobs() {
 
   return (
     <SafeAreaProvider>
+      {jobs}
       <SafeAreaView style={styles.container}>
         <Modal
           animationType="slide"
@@ -161,29 +164,29 @@ export default function Jobs() {
                 </Text>
               </View>
 
-                <View style={{ padding: 20 }}>
-                  <Button
-                    theme="primary"
-                    label="Postulase"
-                    disabled={false}
-                    onPress={() => applyToJob(selectjob?.id as number)}
-                  />
-                  <Pressable
-                    style={{
-                      backgroundColor: "#ff0000",
-                      padding: 10,
-                      borderRadius: 3,
-                    }}
-                    onPress={() => closeModal()}
-                  >
-                    <Text style={{ textAlign: "center", color: "#ffffff" }}>
-                      Cerrar
-                    </Text>
-                  </Pressable>
-                </View>
+              <View style={{ padding: 20 }}>
+                <Button
+                  theme="primary"
+                  label="Postulase"
+                  disabled={false}
+                  onPress={() => applyToJob(selectjob?.id as number)}
+                />
+                <Pressable
+                  style={{
+                    backgroundColor: "#ff0000",
+                    padding: 10,
+                    borderRadius: 3,
+                  }}
+                  onPress={() => closeModal()}
+                >
+                  <Text style={{ textAlign: "center", color: "#ffffff" }}>
+                    Cerrar
+                  </Text>
+                </Pressable>
               </View>
-            </ScrollView>
-          </Modal>
+            </View>
+          </ScrollView>
+        </Modal>
       </SafeAreaView>
     </SafeAreaProvider>
   );

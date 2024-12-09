@@ -96,7 +96,7 @@ export default function Account({ session }: { session: Session }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mb20]}>
-        <Text style={styles.mb20}>Email</Text>
+        <Text style={styles.mb20}>Correo</Text>
         <TextInput
           style={styles.input}
           value={session?.user?.email}
@@ -104,7 +104,7 @@ export default function Account({ session }: { session: Session }) {
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mb20]}>
-        <Text style={styles.mb20}>Username</Text>
+        <Text style={styles.mb20}>Nombre de usuario</Text>
         <TextInput
           // label="Username"
           style={styles.input}
@@ -113,7 +113,7 @@ export default function Account({ session }: { session: Session }) {
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mb20]}>
-        <Text style={styles.mb20}>Website</Text>
+        <Text style={styles.mb20}>Página web</Text>
         <TextInput
           // label="Website"
           style={styles.input}

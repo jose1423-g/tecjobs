@@ -6,6 +6,7 @@ import {
   Pressable,
   ScrollView,
   RefreshControl,
+  TextInput,
 } from "react-native";
 import Button from "@/components/Button";
 import { useEffect, useState } from "react";
@@ -22,9 +23,11 @@ interface job {
 
 export default function Jobs() {
   const [datajobs, setDataJobs] = useState<job[]>([]);
+  const [filteredJobs, setFilteredJobs] = useState<job[]>([]);
   const [appliedJobs, setAppliedJobs] = useState<number[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectjob, setJob] = useState<job | null>(null);
+  const [searchText, setSearchText] = useState("");
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = async () => {
@@ -37,6 +40,7 @@ export default function Jobs() {
 
     const { data: jobs } = await supabase.from("jobs").select("*");
     setDataJobs(jobs as job[]);
+    setFilteredJobs(jobs as job[]);
 
     const { data: applications } = await supabase
       .from("aplications")
@@ -59,7 +63,7 @@ export default function Jobs() {
   };
 
   const openModal = (id: number) => {
-    const job = datajobs.find((item) => item.id === id) || null;
+    const job = filteredJobs.find((item) => item.id === id) || null;
     setJob(job);
     setModalVisible(true);
   };
@@ -97,7 +101,15 @@ export default function Jobs() {
     }
   };
 
-  const jobs = datajobs.map((item) => (
+  const handleSearch = (text: string) => {
+    setSearchText(text);
+    const filtered = datajobs.filter((job) =>
+      job.title.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredJobs(filtered);
+  };
+
+  const jobs = filteredJobs.map((item) => (
     <View style={[styles.card, styles.mb20]} key={item.id}>
       <Text style={[styles.title, styles.mb20]}>{item.title}</Text>
       <Text style={[styles.fontsize16, styles.mb20]}>$ {item.salary}</Text>
@@ -116,6 +128,13 @@ export default function Jobs() {
 
   return (
     <>
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Buscar por título..."
+        value={searchText}
+        onChangeText={handleSearch}
+      />
+
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -184,6 +203,13 @@ export default function Jobs() {
 }
 
 const styles = StyleSheet.create({
+  searchBar: {
+    backgroundColor: "#f0f0f0",
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
+    fontSize: 16,
+  },
   container: {
     flex: 1,
     justifyContent: "center",

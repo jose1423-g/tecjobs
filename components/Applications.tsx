@@ -6,6 +6,7 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import Button from "@/components/Button"; // Cambia la ruta si el botón está en otra carpeta
@@ -34,50 +35,58 @@ export default function Applications() {
   const [appliedJobs, setAppliedJobs] = useState<Job[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const session = await supabase.auth.getSession();
+  const fetchData = async () => {
+    const session = await supabase.auth.getSession();
 
-      if (!session) {
-        return;
-      }
+    if (!session) {
+      return;
+    }
 
+    const { data } = await supabase
+      .from("aplications")
+      .select("*")
+      .eq("user_id", session.data.session?.user.id);
+
+    if (!data) {
+      return;
+    }
+
+    let jobs: Job[] = [];
+
+    for (const apply of data as Applied[]) {
       const { data } = await supabase
-        .from("aplications")
+        .from("jobs")
         .select("*")
-        .eq("user_id", session.data.session?.user.id);
+        .eq("id", apply.job_id);
 
       if (!data) {
         return;
       }
 
-      let jobs: Job[] = [];
+      const appliedDateFormatted = new Date(
+        apply.created_at
+      ).toLocaleDateString("es-ES");
 
-      for (const apply of data as Applied[]) {
-        const { data } = await supabase
-          .from("jobs")
-          .select("*")
-          .eq("id", apply.job_id);
+      jobs.push({
+        ...data[0],
+        status: apply.status,
+        appliedDate: appliedDateFormatted,
+      });
+    }
+    setAppliedJobs(jobs as Job[]);
+  };
 
-        if (!data) {
-          return;
-        }
-
-        const appliedDateFormatted = new Date(
-          apply.created_at
-        ).toLocaleDateString("es-ES");
-
-        jobs.push({
-          ...data[0],
-          status: apply.status,
-          appliedDate: appliedDateFormatted,
-        });
-      }
-      setAppliedJobs(jobs as Job[]);
-    };
+  useEffect(() => {
     fetchData();
   }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchData();
+    setRefreshing(false);
+  };
 
   const openModal = (job: Job) => {
     setSelectedJob(job);
@@ -92,8 +101,11 @@ export default function Applications() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <ScrollView>
-          {/* <Text style={styles.header}>Postulaciones</Text> */}
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
           {appliedJobs.length > 0 &&
             appliedJobs.map((job, key) => (
               <View key={key} style={styles.card}>
@@ -206,11 +218,6 @@ const styles = StyleSheet.create({
   modalContainer: {
     paddingTop: 50,
   },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
   card: {
     backgroundColor: "#ffffff",
     padding: 15,
@@ -240,12 +247,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#757575",
     marginBottom: 10,
-  },
-  modalContent: {
-    width: "90%",
-    backgroundColor: "#ffffff",
-    padding: 20,
-    borderRadius: 8,
   },
   titleModal: {
     fontSize: 25,

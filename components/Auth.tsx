@@ -12,7 +12,6 @@ import { useRouter } from "expo-router";
 import Button from "@/components/Button";
 import LinkButton from "@/components/LinkButton";
 
-
 type Props = {
   theme?: "register";
 };
@@ -45,7 +44,7 @@ export default function Auth({ theme }: Props) {
     if (error) {
       Alert.alert(error.message);
     } else {
-      router.replace("/(tabs)");      
+      router.replace("/(tabs)");
     }
     setLoading(false);
   }
@@ -61,13 +60,11 @@ export default function Auth({ theme }: Props) {
     });
 
     if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert("Please check your inbox for email verification!");
+    if (!session) Alert.alert("Por favor verifique su correo");
     setLoading(false);
   }
 
   if (theme === "register") {
-
     return (
       <View style={styles.container}>
         <View style={[styles.verticallySpaced, styles.mb20]}>

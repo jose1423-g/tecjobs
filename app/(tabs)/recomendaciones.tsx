@@ -85,10 +85,8 @@ export default function Recommendations() {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (appliedJobs.length > 0) {
-        fetchData();
-      }
-    }, [appliedJobs, nonAppliedJobs])
+      fetchData();
+    }, [])
   );
 
   const interpolatedColor = backgroundColor.interpolate({
@@ -133,6 +131,8 @@ export default function Recommendations() {
     });
 
     if (error) return Alert.alert("Hubo un error al postularte.");
+
+    setAppliedJobs((prev) => [...prev, job]);
 
     handleSwipeEnd();
     Alert.alert("¡Postulado!", `Te has postulado a ${job.title}.`);

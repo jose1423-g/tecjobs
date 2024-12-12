@@ -76,6 +76,8 @@ export default function Recommendations() {
 
     if (nonAppliedJobs.length === 0) return;
 
+    if (appliedJobs.length === 0) return;
+
     fetchRecommendations(appliedJobs, nonAppliedJobs).then(
       (recommendations) => {
         setRecommendations(recommendations);
